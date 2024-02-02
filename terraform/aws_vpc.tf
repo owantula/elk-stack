@@ -33,7 +33,7 @@ resource "aws_subnet" "main" {
 }
 
 
-resource "aws_internet_gateway" "intenet_gateway" {
+resource "aws_internet_gateway" "internet_gateway" {
 
   vpc_id = aws_vpc.main.id
 
@@ -74,4 +74,19 @@ resource "aws_route_table_association" "main" {
 resource "aws_route_table_association" "public_igw" {
   subnet_id      = aws_subnet.main["public"].id
   route_table_id = aws_route_table.main["public"].id
+}
+
+
+resource "aws_route" "public_subnet_default_route" {
+  route_table_id         = aws_route_table.main["public"].id
+  destination_cidr_block = "0.0.0.0/0"
+
+  gateway_id = aws_internet_gateway.internet_gateway.id
+}
+
+resource "aws_route" "private_subnet_default_route" {
+  route_table_id         = aws_route_table.main["private"].id
+  destination_cidr_block = "0.0.0.0/0"
+
+  gateway_id = aws_nat_gateway.private.id
 }

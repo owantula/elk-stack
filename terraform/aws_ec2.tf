@@ -15,6 +15,8 @@ locals {
   }
 }
 
+
+
 resource "aws_security_group" "main" {
   for_each    = local.instances
   name        = format("%s-ec2-security-group", each.key)
@@ -45,4 +47,9 @@ resource "aws_instance" "main" {
   tags = {
     Name = format("%s-ec2-instance", each.key)
   }
+}
+
+resource "aws_eip" "puppet-server" {
+  domain   = "vpc"
+  instance = aws_instance.main["puppet-server"].id
 }

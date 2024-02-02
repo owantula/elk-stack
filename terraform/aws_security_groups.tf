@@ -57,6 +57,34 @@ locals {
       cidr_ipv4                    = "0.0.0.0/0"
       referenced_security_group_id = null
     }
+    elk-stash-to-internet-http = {
+      description                  = "Allow http traffic from the elk-stash to the internet"
+      ip_protocol                  = "tcp"
+      from_port                    = 80
+      to_port                      = 80
+      security_group_id            = aws_security_group.main["elk-stash"].id
+      cidr_ipv4                    = "0.0.0.0/0"
+      referenced_security_group_id = null
+    }
+    elk-stash-to-internet-https = {
+      description                  = "Allow https traffic from the elk-stash to the internet"
+      ip_protocol                  = "tcp"
+      from_port                    = 443
+      to_port                      = 443
+      security_group_id            = aws_security_group.main["elk-stash"].id
+      cidr_ipv4                    = "0.0.0.0/0"
+      referenced_security_group_id = null
+    }
+
+    elk-stash-to-internet-icmp = {
+      description                  = "Allow https traffic from the puppet-server to the internet"
+      ip_protocol                  = "icmp"
+      from_port                    = null
+      to_port                      = null
+      security_group_id            = aws_security_group.main["elk-stash"].id
+      cidr_ipv4                    = "0.0.0.0/0"
+      referenced_security_group_id = null
+    }
   }
 }
 

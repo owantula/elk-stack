@@ -14,6 +14,7 @@ locals {
     }
   }
 }
+
 resource "aws_security_group" "main" {
   for_each    = local.instances
   name        = format("%s-ec2-security-group", each.key)
@@ -22,5 +23,20 @@ resource "aws_security_group" "main" {
 
   tags = {
     Name = format("%s-ec2-security-group", each.key)
+  }
+}
+
+
+resource "aws_instance" "main" {
+  for_each                    = local.instances
+  ami                         = each.value.ami_id
+  instance_type               = each.value.instance_type
+  subnet_id                   = each.value.subnet_id
+  associate_public_ip_address = each.value.associate_public_ip_address
+  security_groups = [
+    aws_security_group.main[each.key].id
+  ]
+  tags = {
+    Name = format("%s-ec2-instance", each.key)
   }
 }

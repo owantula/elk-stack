@@ -14,3 +14,13 @@ locals {
     }
   }
 }
+resource "aws_security_group" "main" {
+  for_each    = local.instances
+  name        = format("%s-ec2-security-group", each.key)
+  description = format("Default Security Group for %s EC2 instance", each.key)
+  vpc_id      = aws_vpc.main.id
+
+  tags = {
+    Name = format("%s-ec2-security-group", each.key)
+  }
+}

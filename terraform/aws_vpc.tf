@@ -48,7 +48,7 @@ resource "aws_eip" "nat_gateway" {
 
 resource "aws_nat_gateway" "private" {
   allocation_id = aws_eip.nat_gateway.id
-  subnet_id     = aws_subnet.main["private"].id
+  subnet_id     = aws_subnet.main["public"].id
 
   tags = {
     Name = "main-nat-gateway-private-subnet"

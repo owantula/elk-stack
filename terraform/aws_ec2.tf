@@ -39,7 +39,7 @@ resource "aws_instance" "main" {
   subnet_id                   = each.value.subnet_id
   associate_public_ip_address = each.value.associate_public_ip_address
   key_name                    = aws_key_pair.main.key_name
-  security_groups = [
+  vpc_security_group_ids = [
     aws_security_group.main[each.key].id
   ]
   tags = {

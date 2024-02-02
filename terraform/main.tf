@@ -8,6 +8,7 @@ terraform {
     }
   }
 }
+
 terraform {
   required_version = "1.7.2"
 
@@ -17,4 +18,9 @@ terraform {
       version = "5.34.0"
     }
   }
+}
+
+
+provider "aws" {
+  region = var.aws_region
 }

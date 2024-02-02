@@ -75,7 +75,7 @@ locals {
       description                  = "Allow https traffic from the puppet-server to the internet"
       ip_protocol                  = "icmp"
       from_port                    = 0
-      to_port                      = 0
+      to_port                      = 255
       security_group_id            = aws_security_group.main["puppet-server"].id
       cidr_ipv4                    = "0.0.0.0/0"
       referenced_security_group_id = null
@@ -114,7 +114,7 @@ locals {
       description                  = "Allow https traffic from the puppet-server to the internet"
       ip_protocol                  = "icmp"
       from_port                    = 0
-      to_port                      = 0
+      to_port                      = 255
       security_group_id            = aws_security_group.main["elk-stash"].id
       cidr_ipv4                    = "0.0.0.0/0"
       referenced_security_group_id = null

@@ -9,6 +9,16 @@ locals {
       cidr_ipv4                    = "0.0.0.0/0"
       referenced_security_group_id = null
     }
+
+    puppet-server-puppet-communication-from-elk-stash = {
+      description                  = "Allow puppet traffic to the puppet-server from elk-stack"
+      ip_protocol                  = "tcp"
+      from_port                    = 8140
+      to_port                      = 8140
+      security_group_id            = aws_security_group.main["puppet-server"].id
+      cidr_ipv4                    = null
+      referenced_security_group_id = aws_security_group.main["elk-stash"].id
+    }
     elk-stash-ssh-from-puppet-server = {
       description                  = "Allow SSH traffic to the elk-stash from puppet-server"
       ip_protocol                  = "tcp"
@@ -18,6 +28,19 @@ locals {
       cidr_ipv4                    = null
       referenced_security_group_id = aws_security_group.main["puppet-server"].id
     }
+
+    elk-stash-puppet-communication-from-puppet-server = {
+      description                  = "Allow puppet traffic to the elk-stash from puppet-server"
+      ip_protocol                  = "tcp"
+      from_port                    = 8140
+      to_port                      = 8140
+      security_group_id            = aws_security_group.main["elk-stash"].id
+      cidr_ipv4                    = null
+      referenced_security_group_id = aws_security_group.main["puppet-server"].id
+    }
+
+
+
   }
   egress_rules = {
     puppet-server-to-elk-stash-ssh = {
@@ -57,6 +80,17 @@ locals {
       cidr_ipv4                    = "0.0.0.0/0"
       referenced_security_group_id = null
     }
+
+    puppet-server-puppet-communication-from-elk-stash = {
+      description                  = "Allow puppet traffic to the elk-stack from puppet-srver"
+      ip_protocol                  = "tcp"
+      from_port                    = 8140
+      to_port                      = 8140
+      security_group_id            = aws_security_group.main["puppet-server"].id
+      cidr_ipv4                    = null
+      referenced_security_group_id = aws_security_group.main["elk-stash"].id
+    }
+
     elk-stash-to-internet-http = {
       description                  = "Allow http traffic from the elk-stash to the internet"
       ip_protocol                  = "tcp"
@@ -84,6 +118,16 @@ locals {
       security_group_id            = aws_security_group.main["elk-stash"].id
       cidr_ipv4                    = "0.0.0.0/0"
       referenced_security_group_id = null
+    }
+
+    elk-stash-puppet-communication-from-puppet-server = {
+      description                  = "Allow puppet traffic to the puppet-server from elk-stash"
+      ip_protocol                  = "tcp"
+      from_port                    = 8140
+      to_port                      = 8140
+      security_group_id            = aws_security_group.main["elk-stash"].id
+      cidr_ipv4                    = null
+      referenced_security_group_id = aws_security_group.main["puppet-server"].id
     }
   }
 }

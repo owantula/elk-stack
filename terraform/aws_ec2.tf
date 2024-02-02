@@ -1,12 +1,12 @@
 locals {
   instances = {
-    puppet_server = {
+    puppet-server = {
       ami_id                      = "ami-02fe204d17e0189fb"
       instance_type               = "t2.micro"
       subnet_id                   = aws_subnet.main["public"].id
       associate_public_ip_address = true
     }
-    elk_stash_server = {
+    elk-stash = {
       ami_id                      = "ami-02fe204d17e0189fb"
       instance_type               = "t2.micro"
       subnet_id                   = aws_subnet.main["private"].id
@@ -26,6 +26,11 @@ resource "aws_security_group" "main" {
   }
 }
 
+resource "aws_key_pair" "main" {
+  key_name   = "ow-key"
+  public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFAACIU2QZV7O6ziOyqFHGi+swflE18DLiP78NyT/ELt ondrej.wantula@gmail.com"
+}
+
 
 resource "aws_instance" "main" {
   for_each                    = local.instances
@@ -33,6 +38,7 @@ resource "aws_instance" "main" {
   instance_type               = each.value.instance_type
   subnet_id                   = each.value.subnet_id
   associate_public_ip_address = each.value.associate_public_ip_address
+  key_name                    = aws_key_pair.main.key_name
   security_groups = [
     aws_security_group.main[each.key].id
   ]

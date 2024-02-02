@@ -88,5 +88,5 @@ resource "aws_route" "private_subnet_default_route" {
   route_table_id         = aws_route_table.main["private"].id
   destination_cidr_block = "0.0.0.0/0"
 
-  gateway_id = aws_nat_gateway.private.id
+  nat_gateway_id = aws_nat_gateway.private.id
 }

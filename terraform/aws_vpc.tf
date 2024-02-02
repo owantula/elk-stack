@@ -12,6 +12,8 @@ locals {
   }
 
 }
+
+
 resource "aws_vpc" "main" {
   cidr_block = "172.16.0.0/16"
   tags = {
@@ -30,6 +32,7 @@ resource "aws_subnet" "main" {
   }
 }
 
+
 resource "aws_internet_gateway" "intenet_gateway" {
 
   vpc_id = aws_vpc.main.id
@@ -43,12 +46,32 @@ resource "aws_eip" "nat_gateway" {
   domain = "vpc"
 }
 
-resource "aws_nat_gateway" "main" {
+resource "aws_nat_gateway" "private" {
   allocation_id = aws_eip.nat_gateway.id
-  subnet_id     = aws_subnet.private.id
+  subnet_id     = aws_subnet.main["private"].id
 
   tags = {
     Name = "main-nat-gateway-private-subnet"
   }
 }
- 
+
+resource "aws_route_table" "main" {
+  for_each = local.subnets
+
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = format("main-route-table-%s-subnet", each.key)
+  }
+}
+
+resource "aws_route_table_association" "main" {
+  for_each       = local.subnets
+  subnet_id      = aws_subnet.main[each.key].id
+  route_table_id = aws_route_table.main[each.key].id
+}
+
+resource "aws_route_table_association" "public_igw" {
+  subnet_id      = aws_subnet.main["public"].id
+  route_table_id = aws_route_table.main["public"].id
+}

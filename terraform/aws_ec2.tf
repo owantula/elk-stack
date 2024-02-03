@@ -1,21 +1,19 @@
 locals {
   instances = {
-    puppet-server = {
+    # bastion = {
+    #   ami_id                      = "ami-0faab6bdbac9486fb"
+    #   instance_type               = "t2.medium"
+    #   subnet_id                   = aws_subnet.main["public"].id
+    #   associate_public_ip_address = true
+    # }
+    elk-stack = {
       ami_id                      = "ami-0faab6bdbac9486fb"
       instance_type               = "t2.medium"
       subnet_id                   = aws_subnet.main["public"].id
       associate_public_ip_address = true
     }
-    elk-stash = {
-      ami_id                      = "ami-0faab6bdbac9486fb"
-      instance_type               = "t2.medium"
-      subnet_id                   = aws_subnet.main["private"].id
-      associate_public_ip_address = false
-    }
   }
 }
-
-
 
 resource "aws_security_group" "main" {
   for_each    = local.instances
@@ -49,7 +47,7 @@ resource "aws_instance" "main" {
   }
 }
 
-resource "aws_eip" "puppet-server" {
+resource "aws_eip" "elk-stack" {
   domain   = "vpc"
-  instance = aws_instance.main["puppet-server"].id
+  instance = aws_instance.main["elk-stack"].id
 }

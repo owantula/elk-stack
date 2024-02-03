@@ -1,13 +1,13 @@
 locals {
   instances = {
     puppet-server = {
-      ami_id                      = "ami-0d118c6e63bcb554e"
+      ami_id                      = "ami-0faab6bdbac9486fb"
       instance_type               = "t2.medium"
       subnet_id                   = aws_subnet.main["public"].id
       associate_public_ip_address = true
     }
     elk-stash = {
-      ami_id                      = "ami-0d118c6e63bcb554e"
+      ami_id                      = "ami-0faab6bdbac9486fb"
       instance_type               = "t2.medium"
       subnet_id                   = aws_subnet.main["private"].id
       associate_public_ip_address = false

@@ -1,15 +1,23 @@
 locals {
   instances = {
-    # bastion = {
-    #   ami_id                      = "ami-0faab6bdbac9486fb"
-    #   instance_type               = "t2.medium"
-    #   subnet_id                   = aws_subnet.main["public"].id
-    #   associate_public_ip_address = true
-    # }
-    elk-stack = {
+    kibana = {
       ami_id                      = "ami-0faab6bdbac9486fb"
       instance_type               = "t2.medium"
       subnet_id                   = aws_subnet.main["public"].id
+      associate_public_ip_address = true
+    }
+
+    elasticsearch = {
+      ami_id                      = "ami-0faab6bdbac9486fb"
+      instance_type               = "t2.medium"
+      subnet_id                   = aws_subnet.main["private"].id
+      associate_public_ip_address = true
+    }
+
+    logstash = {
+      ami_id                      = "ami-0faab6bdbac9486fb"
+      instance_type               = "t2.medium"
+      subnet_id                   = aws_subnet.main["private"].id
       associate_public_ip_address = true
     }
   }
@@ -47,7 +55,7 @@ resource "aws_instance" "main" {
   }
 }
 
-resource "aws_eip" "elk-stack" {
+resource "aws_eip" "kibana" {
   domain   = "vpc"
-  instance = aws_instance.main["elk-stack"].id
+  instance = aws_instance.main["kibana"].id
 }

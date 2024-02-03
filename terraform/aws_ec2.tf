@@ -11,14 +11,14 @@ locals {
       ami_id                      = "ami-0faab6bdbac9486fb"
       instance_type               = "t2.medium"
       subnet_id                   = aws_subnet.main["private"].id
-      associate_public_ip_address = true
+      associate_public_ip_address = false
     }
 
     logstash = {
       ami_id                      = "ami-0faab6bdbac9486fb"
       instance_type               = "t2.medium"
       subnet_id                   = aws_subnet.main["private"].id
-      associate_public_ip_address = true
+      associate_public_ip_address = false
     }
   }
 }

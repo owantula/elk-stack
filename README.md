@@ -55,6 +55,12 @@ Modules are taken from puppet forge, and they are managed by puppet themselves. 
 + [elasticsearch](https://forge.puppet.com/modules/puppet/elasticsearch/readme)
 + [kibana](https://forge.puppet.com/modules/puppet/kibana/readme)
 
+### Configuration:
+
+Each instance in this Infrastructure runs, one part of the ELK Stack. The manifest, in combination with the module changes the instanfce hostname, and then installs and configures the part of the stack its responsible for. For your use you will need to change the IP Addresses that are found for the **elasticsearch** part of the stack, otherwise it should be fine.
+
+Example logstash pipeline, that forwards all .log files found in **/var/log** can be found in the **pippelines** folder.
+
 ### Instance Configuration Example
 
 1. SSH Into the instance, for example kibana

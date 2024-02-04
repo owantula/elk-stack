@@ -79,6 +79,15 @@ locals {
       cidr_ipv4                    = "0.0.0.0/0"
       referenced_security_group_id = null
     }
+    kibana-to-elasticsearch-ssh = {
+      description                  = "Allow traffic from kibana to elasticsearch"
+      ip_protocol                  = "tcp"
+      from_port                    = 22
+      to_port                      = 22
+      security_group_id            = aws_security_group.main["kibana"].id
+      cidr_ipv4                    = null
+      referenced_security_group_id = aws_security_group.main["elasticsearch"].id
+    }
 
     kibana-to-elasticsearch-9200 = {
       description                  = "Allow traffic from kibana to elasticsearch"
@@ -88,6 +97,16 @@ locals {
       security_group_id            = aws_security_group.main["kibana"].id
       cidr_ipv4                    = null
       referenced_security_group_id = aws_security_group.main["elasticsearch"].id
+    }
+
+    kibana-to-logstash-ssh = {
+      description                  = "Allow traffic from kibana to elasticsearch"
+      ip_protocol                  = "tcp"
+      from_port                    = 22
+      to_port                      = 22
+      security_group_id            = aws_security_group.main["kibana"].id
+      cidr_ipv4                    = null
+      referenced_security_group_id = aws_security_group.main["logstash"].id
     }
     elasticsearch-to-internet-http = {
       description                  = "Allow http traffic from kibana to the internet"

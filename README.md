@@ -61,12 +61,17 @@ Each instance in this Infrastructure runs, one part of the ELK Stack. The manife
 
 Example logstash pipeline, that forwards all .log files found in **/var/log** can be found in the **pippelines** folder.
 
+### SSL for Kibana:
+
+Kibana instance has enabled SSL for its publicaly accessible interface. It requires a Domain Name, a Certificate Signed by a CA and point the kibana.pp to the correct certificate files.
+If SSL won't be used change the SSL Enabled to False, and remove paths to the certificates.
+
 ### Instance Configuration Example
 
-1. SSH Into the instance, for example kibana
+1. SSH Into the instance, for example **elasticsearch**.
 2. Copy the puppet_instal.sh, and run it.
-3. Install the necessary module for example `sudo puppet module install puppet-kibana --version 8.0.0`
-4. Apply the manifest for example `sudo puppet apply kibana.pp`
+3. Install the necessary module for example `sudo puppet module install puppet-elasticsearch --version 8.0.0`
+4. Apply the manifest for example `sudo puppet apply elasticsearch.pp`
 5. Your instance will be configured and ready to use.
 
  

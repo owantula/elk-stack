@@ -21,7 +21,7 @@ Terraform code should be self documenting but to be sure:
 **Network:**
 
 One VPC created, with 2 Subnets Public and Private. Public has access to Internet over Internet Gateway and instances there can be accessed from internet. Private has access to internet over Nat GW and can't be accessed over internet directly.
-The only instance that is reachable from internet is the **Kibana** which serves as SSH jump host, and hosts the [Kibana](http://35.158.148.2:5601/app/home#/)
+The only instance that is reachable from internet is the **Kibana** which serves as SSH jump host, and hosts the [Kibana](https://kibana.wancek.com:5601/app/home#/)
 
 **Compute:**
 

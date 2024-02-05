@@ -28,7 +28,10 @@ class { 'elastic_stack::repo':
 
 class { 'kibana':
   config => {
-    'server.host'         => '0.0.0.0',
-    'elasticsearch.hosts' => 'http://172.16.0.10:9200'
+    'server.host'            => '0.0.0.0',
+    'elasticsearch.hosts'    => 'http://172.16.0.10:9200'
+    'server.ssl.enabled'     => true,
+    'server.ssl.certificate'  => '/etc/letsencrypt/live/kibana.wancek.com/fullchain.pem',
+    'server.ssl.key'         => '/etc/letsencrypt/live/kibana.wancek.com/privkey.pem',
   }
 }
